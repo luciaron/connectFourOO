@@ -109,9 +109,9 @@ class Game {
       return cells.every(
         ([y, x]) =>
           y >= 0 &&
-          y < HEIGHT &&
+          y < this.height &&
           x >= 0 &&
-          x < WIDTH &&
+          x < this.width &&
           board[y][x] === currPlayer
       );
     }
@@ -133,8 +133,8 @@ class Game {
     }
   };
 
-  makeBoard();
-  makeHtmlBoard();
+  // makeBoard();
+  // makeHtmlBoard();
 }
 
 // const WIDTH = 7;
