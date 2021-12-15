@@ -7,7 +7,12 @@
 
 const button = document.getElementById('start');
 button.addEventListener('click', function () {
-  new Game(6,7)
+  const currGame = document.querySelector('table');
+  if (currGame.innerHTML) {
+    console.log(currGame.innerHTML);
+    currGame.innerHTML = null;
+  }
+  new Game(6,7);
 })
 
 class Game {
@@ -15,7 +20,7 @@ class Game {
     this.height = height;
     this.width = width;
     this.board = [];
-    this.currPlayer = 1;
+    this.currPlayer = Player.p1;
     this.makeBoard();
     this.makeHtmlBoard();
   };
@@ -146,3 +151,11 @@ class Game {
     }
   };
 };
+
+class Player {
+  constructor (one, two) {
+    this.p1 = one;
+    this.p2 = two;
+    this.playerNumber = this.p1;
+  }
+}
