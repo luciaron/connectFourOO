@@ -90,13 +90,13 @@ class Game {
     this.placeInTable(y, x);
     
     // check for win
-    if (checkForWin()) {
-      return endGame(`Player ${this.currPlayer} won!`);
+    if (this.checkForWin()) {
+      return this.endGame(`Player ${this.currPlayer} won!`);
     }
     
     // check for tie
-    if (board.every(row => row.every(cell => cell))) {
-      return endGame('Tie!');
+    if (this.board.every(row => row.every(cell => cell))) {
+      return this.endGame('Tie!');
     }
       
     // switch players
@@ -104,18 +104,19 @@ class Game {
   };
 
   checkForWin() {
-    function _win(cells) {
+    // console.log(this)
+    const _win = (cells) => {
       // Check four cells to see if they're all color of current player
       //  - cells: list of four (y, x) cells
       //  - returns true if all are legal coordinates & all match currPlayer
-  
+      // console.log(this);
       return cells.every(
         ([y, x]) =>
           y >= 0 &&
           y < this.height &&
           x >= 0 &&
           x < this.width &&
-          board[y][x] === currPlayer
+          this.board[y][x] === this.currPlayer
       );
     }
   
