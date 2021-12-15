@@ -27,7 +27,8 @@ class Game {
     // make column tops (clickable area for adding a piece to that column)
     const top = document.createElement('tr');
     top.setAttribute('id', 'column-top');
-    top.addEventListener('click', this.handleClick);
+    this.handleGameClick = this.handleClick.bind(this);
+    top.addEventListener('click', this.handleGameClick);
   
     for (let x = 0; x < this.width; x++) {
       const headCell = document.createElement('td');
@@ -51,9 +52,9 @@ class Game {
     }
   };
   
-  findSpotForCol(x) {
+  findSpotForCol (x) {
     for (let y = this.height - 1; y >= 0; y--) {
-      if (!board[y][x]) {
+      if (!this.board[y][x]) {
         return y;
       }
     }
@@ -63,7 +64,7 @@ class Game {
   placeInTable(y, x) {
     const piece = document.createElement('div');
     piece.classList.add('piece');
-    piece.classList.add(`p${currPlayer}`);
+    piece.classList.add(`p${this.currPlayer}`);
     piece.style.top = -50 * (y + 2);
   
     const spot = document.getElementById(`${y}-${x}`);
@@ -85,12 +86,12 @@ class Game {
     }
   
     // place piece in board and add to HTML table
-    board[y][x] = currPlayer;
-    placeInTable(y, x);
+    this.board[y][x] = this.currPlayer;
+    this.placeInTable(y, x);
     
     // check for win
     if (checkForWin()) {
-      return endGame(`Player ${currPlayer} won!`);
+      return endGame(`Player ${this.currPlayer} won!`);
     }
     
     // check for tie
@@ -99,7 +100,7 @@ class Game {
     }
       
     // switch players
-    currPlayer = currPlayer === 1 ? 2 : 1;
+    this.currPlayer = this.currPlayer === 1 ? 2 : 1;
   };
 
   checkForWin() {
@@ -118,8 +119,8 @@ class Game {
       );
     }
   
-    for (let y = 0; y < HEIGHT; y++) {
-      for (let x = 0; x < WIDTH; x++) {
+    for (let y = 0; y < this.height; y++) {
+      for (let x = 0; x < this.width; x++) {
         // get "check list" of 4 cells (starting here) for each of the different
         // ways to win
         const horiz = [[y, x], [y, x + 1], [y, x + 2], [y, x + 3]];
